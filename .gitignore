@@ -1,5 +1,5 @@
 CardHero/CardHero.xcodeproj
 *.dll
 *.cbp
-CardHero\CardHero\bin
-CardHero\CardHero\obj
+bin\
+obj\
