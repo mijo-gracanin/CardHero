@@ -22,7 +22,8 @@ namespace as
 
         sf::Clock _clock;
 
-        sf::Sprite _background;
+        //sf::Sprite _background;
+        sf::Sound _Sound;
 
     };
 }

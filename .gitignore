@@ -5,3 +5,5 @@ CardHero/CardHero.xcodeproj
 bin\
 obj\
 *.depend
+CardHero/CardHero/bin/
+CardHero/CardHero/obj/
