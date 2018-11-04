@@ -4,6 +4,3 @@ CardHero/CardHero.xcodeproj
 *.depend
 bin\
 obj\
-
-#macOS clutter
-.DS_Store
