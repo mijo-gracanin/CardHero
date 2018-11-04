@@ -5,3 +5,6 @@ CardHero/CardHero.xcodeproj
 *.plist
 bin\
 obj\
+
+#macOS clutter
+.DS_Store
