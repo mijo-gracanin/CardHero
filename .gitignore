@@ -7,3 +7,6 @@ obj\
 *.depend
 CardHero/CardHero/bin/
 CardHero/CardHero/obj/
+
+# macOS
+.DS_Store
