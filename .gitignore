@@ -4,3 +4,4 @@ CardHero/CardHero.xcodeproj
 *.depend
 bin\
 obj\
+*.depend

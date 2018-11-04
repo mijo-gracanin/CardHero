@@ -456,3 +456,9 @@
 
 1541326196 f:\projects\cardhero\cardhero\cardhero\definitions.h
 
+1541326322 source:f:\projects\cardhero\cardhero\cardhero\splashstate.cpp
+	<sstream>
+	"SplashState.h"
+	"DEFINITIONS.h"
+	<iostream>
+
