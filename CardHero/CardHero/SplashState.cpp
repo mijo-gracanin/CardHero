@@ -16,16 +16,9 @@ namespace as
     {
         //this->_data->assets.LoadTexture("Splash State Background",SPLASH_SCENE_BACKGROUND_FILEPATH);     need to import a backgorund picture for splash screen
       //_background.setTexture(this->_data->assets.GetTexture("Splash State Background"));
-     // sf::SoundBuffer buffer;
-     // buffer.loadFromFile(BACKGROUND_MUSIC_FILEPATH);
-     // _Sound.setBuffer(buffer);
-     // _Sound.play();
-     sf::Music bkmusic;
-     bkmusic.openFromFile("nice_music.ogg");
-     bkmusic.play();
-     bkmusic.setVolume(50);
-     std::cout<<"SPlash";
-
+        _introB.loadFromFile(BACKGROUND_MUSIC_FILEPATH);
+        _intro.setBuffer(_introB);
+        _intro.play();
     }
     void SplashState::HandleInput()
     {
@@ -43,6 +36,7 @@ namespace as
     {
         if(this->_clock.getElapsedTime().asSeconds()>SPLASH_STATE_SHOW_TIME)
         {
+            _intro.stop();
             //std::cout<<"Go to Main Menu"<<std::endl;
         }
     }
