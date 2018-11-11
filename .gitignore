@@ -10,3 +10,4 @@ CardHero/CardHero/obj/
 
 # macOS
 .DS_Store
+*.layout
