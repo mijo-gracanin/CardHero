@@ -10,6 +10,10 @@ Game::Game(int width,int height,std::string title)
 }
 void Game::Run()
 {
+    //this should help decreasing the CPU usage
+    this->_data->window.setFramerateLimit(60);
+    this->_data->window.setVerticalSyncEnabled(true);
+
     float newTime,frameTime,interpolation;
     float currentTime=this->_clock.getElapsedTime().asSeconds();
     float accumulator=0.0f;
