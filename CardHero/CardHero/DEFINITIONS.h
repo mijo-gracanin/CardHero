@@ -7,4 +7,4 @@
 
 #define SPLASH_SCENE_BACKGROUND_FILEPATH //Splash Screen Background Picture
 
-#define BACKGROUND_MUSIC_FILEPATH "nice_music.wav"
+#define BACKGROUND_MUSIC_FILEPATH "intro.wav"

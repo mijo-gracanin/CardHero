@@ -1,6 +1,7 @@
 #include <sstream>
 #include "SplashState.h"
 #include "DEFINITIONS.h"
+#include "MainMenuState.h"
 #include <SFML/Audio.hpp>
 
 #include <iostream>
@@ -37,7 +38,7 @@ namespace as
         if(this->_clock.getElapsedTime().asSeconds()>SPLASH_STATE_SHOW_TIME)
         {
             _intro.stop();
-            //std::cout<<"Go to Main Menu"<<std::endl;
+            this->_data->machine.AddState(StateRef(new MainMenuState(_data)),true);
         }
     }
 
