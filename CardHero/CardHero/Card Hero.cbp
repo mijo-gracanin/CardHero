@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Card Hero" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Card Hero" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="sfml-graphics-d" />
+					<Add library="sfml-audio-d" />
+					<Add library="sfml-network-d" />
+					<Add library="sfml-window-d" />
+					<Add library="sfml-system-d" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Card Hero" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-audio" />
+					<Add library="sfml-network" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c++1y" />
+			<Add option="-fexceptions" />
+			<Add directory="F:/SFML-2.5.0/include" />
+		</Compiler>
+		<Linker>
+			<Add directory="F:/SFML-2.5.0/lib" />
+		</Linker>
+		<Unit filename="AssetManager.cpp" />
+		<Unit filename="AssetManager.h" />
+		<Unit filename="Card.cpp" />
+		<Unit filename="Card.hpp" />
+		<Unit filename="CardsState.cpp" />
+		<Unit filename="CardsState.hpp" />
+		<Unit filename="Collision.cpp" />
+		<Unit filename="Collision.h" />
+		<Unit filename="DEFINITIONS.h" />
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.h" />
+		<Unit filename="InputManager.cpp" />
+		<Unit filename="InputManager.h" />
+		<Unit filename="MainMenuState.cpp" />
+		<Unit filename="MainMenuState.h" />
+		<Unit filename="SplashState.cpp" />
+		<Unit filename="SplashState.h" />
+		<Unit filename="State.h" />
+		<Unit filename="StateMachine.cpp" />
+		<Unit filename="StateMachine.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

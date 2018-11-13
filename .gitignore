@@ -1,10 +1,7 @@
 CardHero/CardHero.xcodeproj
 *.dll
-*.cbp
-*.depend
 bin\
 obj\
-*.depend
 CardHero/CardHero/bin/
 CardHero/CardHero/obj/
 
