@@ -10,18 +10,29 @@
 #define Card_hpp
 
 #include <stdio.h>
+#include <SFML/Graphics.hpp>
 
 namespace as
 {
-    enum CardTrait {
-        HP, MALE_DAMAGE, MOVEMENT_SPEED, ATACK_SPEED
+    enum TraitType {
+        HP, MELEE_DAMAGE, MOVEMENT_SPEED, ATACK_SPEED
     };
     
-    class Card {
-        CardTrait _trait;
-        
+    struct CardTrait {
+        TraitType type;
+        float value;
+    };
+    
+    class Card : public sf::Drawable {
+    
     public:
         Card(CardTrait trait);
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    
+    private:
+        CardTrait m_trait;
+        sf::RectangleShape m_cardShape;
+        sf::Text m_cardText;
     };
 }
 

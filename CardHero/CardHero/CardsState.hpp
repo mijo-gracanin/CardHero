@@ -15,8 +15,7 @@
 
 namespace as
 {
-    class CardsState : public State
-    {
+    class CardsState : public State {
     public:
         CardsState(GameDataRef data);
         

@@ -10,7 +10,13 @@
 
 namespace as {
     
-    Card::Card(CardTrait trait) {
-        _trait = trait;
+    Card::Card(CardTrait trait):
+    m_trait(trait) {
+        
+    };
+    
+    void Card::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+        target.draw(m_cardShape, states);
+        target.draw(m_cardText, states);
     }
 }
