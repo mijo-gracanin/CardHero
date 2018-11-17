@@ -10,9 +10,16 @@
 
 namespace as {
     
-    Card::Card(CardTrait trait):
-    m_trait(trait) {
-        
+    Card::Card(CardColor color, CardTrait trait, size size):
+    m_color(color),
+    m_trait(trait),
+    m_cardShape(sf::RectangleShape(size)),
+    m_cardText(sf::Text()),
+    m_isRevealed(false) {
+    
+        m_cardShape.setFillColor(sf::Color::Cyan);
+        m_cardShape.setOutlineColor(sf::Color::White);
+        m_cardShape.setOutlineThickness(2);
     };
     
     void Card::draw(sf::RenderTarget& target, sf::RenderStates states) const {

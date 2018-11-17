@@ -6,16 +6,20 @@
 //  Copyright © 2018 MijoCoder. All rights reserved.
 //
 
+#include "DEFINITIONS.h"
 #include "CardsState.hpp"
 #include "SplashState.h"
-#include "DEFINITIONS.h"
-#include <SFML/Audio.hpp>
+#include "Card.hpp"
 
 namespace as
 {
-    CardsState::CardsState(GameDataRef data): _data(data)
+    CardsState::CardsState(GameDataRef data):
+    m_data(data),
+    m_cardDeck({})
     {
-        
+        CardTrait trait;
+        Card card(CardColor::GREEN, trait, size(40, 80));
+        m_cardDeck.insert(m_cardDeck.begin(), card);
     }
     
     void CardsState::Init()
@@ -26,11 +30,11 @@ namespace as
     void CardsState::HandleInput()
     {
         sf::Event event;
-        while(this->_data->window.pollEvent(event))
+        while(this->m_data->window.pollEvent(event))
         {
             if(sf::Event::Closed==event.type)
             {
-                this->_data->window.close();
+                this->m_data->window.close();
             }
         }
     }
@@ -42,8 +46,13 @@ namespace as
     
     void CardsState::Draw(float dt)
     {
-        this->_data->window.clear();
-        //this->_data->window.draw(this->_background);   after we make a splash screen we just remove //
-        this->_data->window.display();
+        this->m_data->window.clear();
+        
+        for (int i=0; i<m_cardDeck.size(); ++i) {
+            Card card = m_cardDeck[i];
+            this->m_data->window.draw(card);
+        }
+        
+        this->m_data->window.display();
     }
 }

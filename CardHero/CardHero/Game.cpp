@@ -1,5 +1,8 @@
 #include "Game.h"
 #include "SplashState.h"
+#include "CardsState.hpp"
+
+
 namespace as
 {
 Game::Game(int width,int height,std::string title)

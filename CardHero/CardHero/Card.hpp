@@ -14,25 +14,38 @@
 
 namespace as
 {
+    
+    enum CardColor {
+        BLUE, GREEN, RED, YELLOW, ALL
+    };
+    
+    
     enum TraitType {
         HP, MELEE_DAMAGE, MOVEMENT_SPEED, ATACK_SPEED
     };
+    
     
     struct CardTrait {
         TraitType type;
         float value;
     };
     
+    
+    typedef sf::Vector2f size;
+    
+    
     class Card : public sf::Drawable {
-    
+        
     public:
-        Card(CardTrait trait);
+        Card(CardColor color, CardTrait trait, size size);
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    
+        
     private:
+        CardColor m_color;
         CardTrait m_trait;
         sf::RectangleShape m_cardShape;
         sf::Text m_cardText;
+        bool m_isRevealed;
     };
 }
 

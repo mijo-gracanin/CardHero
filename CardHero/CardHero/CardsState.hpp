@@ -10,11 +10,18 @@
 #define CardsState_hpp
 
 #include <SFML/Graphics.hpp>
+#include <array>
 #include "State.h"
 #include "Game.h"
+#include "Card.hpp"
 
 namespace as
 {
+    enum CardGameStateTypes {
+        SHOW_CARDS, DEAL_CARDS, PLAYER_TURN, AI_TURN, GAME_OVER
+    };
+    
+    
     class CardsState : public State {
     public:
         CardsState(GameDataRef data);
@@ -26,7 +33,10 @@ namespace as
         void Draw(float dt);
         
     private:
-        GameDataRef _data;
+        GameDataRef m_data;
+        CardGameStateTypes m_currentState;
+        std::vector<Card> m_cardDeck;
+        std::array<Card *, 4> m_playerHand;
     };
 }
 
