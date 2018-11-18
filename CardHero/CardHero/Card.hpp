@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
+#include "RoundedRectangleShape.hpp"
 
 namespace as
 {
@@ -39,11 +40,13 @@ namespace as
     public:
         Card(CardColor color, CardTrait trait, size size);
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        static sf::Color getColorForCardColor(CardColor color);
+        void setPosition(float x, float y);
         
     private:
         CardColor m_color;
         CardTrait m_trait;
-        sf::RectangleShape m_cardShape;
+        sf::RoundedRectangleShape m_cardShape;
         sf::Text m_cardText;
         bool m_isRevealed;
     };
