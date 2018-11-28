@@ -22,7 +22,7 @@ namespace as
     class CardAnimation {
         
     public:
-        CardAnimation(Card * const card, sf::Vector2f destinationPoint, float speed = 300);
+        CardAnimation(Card * const card, sf::Vector2f destinationPoint, float speed = 600);
         CardAnimation(Card * const card, float flipDuration);
         void update(float dt);
         bool getIsCompleted() const;

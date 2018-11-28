@@ -23,7 +23,7 @@ namespace as
     
     
     enum CardGameStateTypes {
-        DEAL_CARDS, DRAW_CARDS, GAME_OVER
+        DEAL_CARDS, PLAY_CARDS, GAME_OVER
     };
     
     class CardsState : public State {

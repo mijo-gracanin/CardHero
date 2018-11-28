@@ -52,7 +52,7 @@ namespace as
                 auto &hand = m_isPlayerTurn ? m_playerHand : m_aiHand;
                 
                 if (getCardCount(hand) == CARD_HAND_COUNT) {
-                    m_currentState = DRAW_CARDS;
+                    m_currentState = PLAY_CARDS;
                     return;
                 }
                 
@@ -73,8 +73,12 @@ namespace as
                     m_isPlayerTurn = !m_isPlayerTurn;
                 }
             }
-        } else if (m_currentState == DRAW_CARDS) {
-            // TODO
+        } else if (m_currentState == PLAY_CARDS) {
+            if (m_isPlayerTurn) {
+                // Player can continue playing or pass
+            } else {
+                
+            }
         }
     }
     
@@ -117,11 +121,10 @@ namespace as
     
     void CardsState::updateDeckPosition() {
         sf::Vector2u windowSize = m_data->window.getSize();
-        int leftMargin = windowSize.x / 20;
+        int leftMargin = m_cardSize.x / 10 + (m_cardSize.x /2);
         int verticalOffset = 3;
         int verticalMiddle = windowSize.y / 2;
-        int cardMiddle = m_cardSize.y / 2;
-        int bottomMargin = verticalMiddle - cardMiddle + (m_cardDeck.size() / 2 * verticalOffset);
+        int bottomMargin = verticalMiddle + (verticalOffset * m_cardDeck.size() / 2);
         for (int i=0; i<m_cardDeck.size(); ++i) {
             m_cardDeck[i]->setPosition(leftMargin, bottomMargin - (i * verticalOffset));
         }
@@ -173,18 +176,17 @@ namespace as
         sf::Vector2u windowSize = m_data->window.getSize();
         float paddingBetweenCards = m_cardSize.x / 10;
         float screenMiddle = windowSize.x / 2;
-        float cardMiddle = m_cardSize.x / 2;
         float widthOfCardsInHand = CARD_HAND_COUNT * m_cardSize.x;
         float paddingBetweenCardsInHand = (CARD_HAND_COUNT - 1) * paddingBetweenCards;
         float handWidth = widthOfCardsInHand + paddingBetweenCardsInHand;
-        float firstCard_x = screenMiddle - cardMiddle - (handWidth / 2);
+        float firstCard_x = screenMiddle - (handWidth / 2);
         float x = firstCard_x + (index * (m_cardSize.x + paddingBetweenCards));
         
         float y;
         if (m_isPlayerTurn) {
-            y = windowSize.y - m_cardSize.y - paddingBetweenCards;
+            y = windowSize.y - (m_cardSize.y / 2) - paddingBetweenCards;
         } else {
-            y = paddingBetweenCards;
+            y = paddingBetweenCards + (m_cardSize.y / 2);
         }
         
         return sf::Vector2f(x, y);

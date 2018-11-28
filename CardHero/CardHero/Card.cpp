@@ -25,6 +25,7 @@ namespace as {
         m_cardShape.setFillColor(getColorForCardColor(m_color));
         m_cardShape.setOutlineColor(sf::Color::White);
         m_cardShape.setOutlineThickness(2);
+        m_cardShape.setOrigin(size.x / 2, size.y / 2);
     };
     
     void Card::draw(sf::RenderTarget& target, sf::RenderStates states) const {
