@@ -36,6 +36,10 @@ namespace as {
         m_cardShape.setPosition(x, y);
     }
     
+    sf::Vector2f Card::getPosition() const {
+        return m_cardShape.getPosition();
+    }
+    
     sf::Color Card::getColorForCardColor(CardColor color) {
         switch (color) {
             case ALL:

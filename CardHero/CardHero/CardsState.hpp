@@ -14,15 +14,17 @@
 #include "State.h"
 #include "Game.h"
 #include "Card.hpp"
+#include "CardAnimation.hpp"
 
 namespace as
 {
     static const int CARD_DECK_COUNT = 20;
+    static const int CARD_HAND_COUNT = 4;
+    
     
     enum CardGameStateTypes {
-        SHOW_CARDS, DEAL_CARDS, PLAYER_TURN, AI_TURN, GAME_OVER
+        DEAL_CARDS, DRAW_CARDS, GAME_OVER
     };
-    
     
     class CardsState : public State {
     public:
@@ -35,16 +37,26 @@ namespace as
     private:
         GameDataRef m_data;
         CardGameStateTypes m_currentState;
-        std::vector<Card> m_cardDeck;
-        std::vector<Card> m_playerWonCards;
-        std::vector<Card> m_aiWonCards;
-        std::array<Card *, 4> m_playerHand;
-        std::array<Card *, 4> m_aiHand;
+        std::vector<Card> m_cards;
+        std::vector<Card *> m_cardDeck;
+        std::vector<Card *> m_playerWonCards;
+        std::vector<Card *> m_aiWonCards;
+        std::vector<CardAnimation> m_animations;
+        std::array<Card *, CARD_HAND_COUNT> m_playerHand;
+        std::array<Card *, CARD_HAND_COUNT> m_aiHand;
         sf::Vector2f m_cardSize;
+        bool m_isPlayerTurn;
         
+        void setupCardSize();
         void generateDeck();
         void shuffleDeck();
         void updateDeckPosition();
+        void dealCard();
+        void drawCards() const;
+        int getCardCount(std::array<Card *, CARD_HAND_COUNT> &hand) const;
+        int getFreeCardSlotIndex(std::array<Card *, CARD_HAND_COUNT> &hand) const;
+        sf::Vector2f getPositionOfHandCardAtIndex(int index) const;
+        void purgeCompletedAnimations();
     };
 }
 
