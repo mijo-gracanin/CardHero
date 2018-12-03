@@ -8,6 +8,8 @@
 
 #include "DEFINITIONS.h"
 #include "CardsState.hpp"
+#include "InputManager.h"
+#include "Game.h"
 #include <iostream>
 
 
@@ -17,7 +19,8 @@ namespace as
     
     CardsState::CardsState(GameDataRef data):
     m_data(data),
-    m_isPlayerTurn(true)
+    m_isPlayerTurn(true),
+    m_selectedCard(nullptr)
     {
         m_playerHand.fill(nullptr);
         m_aiHand.fill(nullptr);
@@ -27,6 +30,7 @@ namespace as
     {
         m_currentState = DEAL_CARDS;
         setupCardSize();
+        setupPlayAreaRect();
         generateDeck();
         shuffleDeck();
         updateDeckPosition();
@@ -46,38 +50,53 @@ namespace as
     
     void CardsState::Update(float dt)
     {
-        if (m_currentState == DEAL_CARDS) {
-            if (m_animations.empty()) {
-                
-                auto &hand = m_isPlayerTurn ? m_playerHand : m_aiHand;
-                
-                if (getCardCount(hand) == CARD_HAND_COUNT) {
-                    m_currentState = PLAY_CARDS;
-                    return;
-                }
-                
-                Card *card = m_cardDeck.back();
-                m_cardDeck.pop_back();
-                
-                int freeCardSlotIndex = getFreeCardSlotIndex(hand);
-                hand[freeCardSlotIndex] = card;
-                sf::Vector2f destination = getPositionOfHandCardAtIndex(freeCardSlotIndex);
-                m_animations.emplace_back(card, destination);
-            } else {
-                for (auto &animation: m_animations) {
-                    animation.update(dt);
-                }
-                purgeCompletedAnimations();
-                
-                if (m_animations.size() == 0) {
-                    m_isPlayerTurn = !m_isPlayerTurn;
-                }
+        if (!m_animations.empty()) {
+            for (auto &animation: m_animations) {
+                animation.update(dt);
             }
-        } else if (m_currentState == PLAY_CARDS) {
+            purgeCompletedAnimations();
+            return;
+        }
+        
+        if (m_currentState == DEAL_CARDS) {
+            
+            auto &hand = m_isPlayerTurn ? m_playerHand : m_aiHand;
+            
+            if (getCardCount(hand) == CARD_HAND_COUNT) {
+                m_currentState = PLAY_CARDS;
+                return;
+            }
+            
+            Card *card = m_cardDeck.back();
+            m_cardDeck.pop_back();
+            
+            int freeCardSlotIndex = getFreeCardSlotIndex(hand);
+            hand[freeCardSlotIndex] = card;
+            sf::Vector2f destination = getPositionOfHandCardAtIndex(freeCardSlotIndex);
+            m_animations.emplace_back(card, destination);
+            m_isPlayerTurn = !m_isPlayerTurn;
+        }
+        else if (m_currentState == PLAY_CARDS) {
             if (m_isPlayerTurn) {
-                // Player can continue playing or pass
-            } else {
+                sf::Vector2i mousePosition = sf::Mouse::getPosition(m_data->window); //m_data->input.GetMousePosition(m_data->window);
+                Card *selectedCard = getSelectedCard();
                 
+                if (selectedCard != nullptr && m_selectedCard == selectedCard) {
+                    int x = mousePosition.x - m_mousePosition.x;
+                    int y = mousePosition.y - m_mousePosition.y;
+                    m_selectedCard->move(x, y);
+                } else if (selectedCard == nullptr && m_selectedCard != nullptr) {
+                    sf::Vector2f postition = m_selectedCard->getPosition();
+                    if (m_playArea.contains(postition.x, postition.y)) {
+                        moveCardFromHandToPlayArea(m_selectedCard);
+                        m_isPlayerTurn = false;
+                    } else {
+                        alignMisplacedCards();
+                    }
+                }
+                
+                m_selectedCard = selectedCard;
+                m_mousePosition = mousePosition;
             }
         }
     }
@@ -95,9 +114,18 @@ namespace as
     
     void CardsState::setupCardSize() {
         sf::Vector2u windowSize = m_data->window.getSize();
-        uint cardWidth = windowSize.x / 10;
-        uint cardHeight = cardWidth * 2;
+        int cardWidth = windowSize.x / 10;
+        int cardHeight = cardWidth * 2;
         m_cardSize = sf::Vector2f(cardWidth, cardHeight);
+    }
+    
+    void CardsState::setupPlayAreaRect() {
+        sf::Vector2u windowSize = m_data->window.getSize();
+        int width = windowSize.x / 12;
+        int height = width * 2;
+        int x = (windowSize.x - width) / 2;
+        int y = (windowSize.y - height) / 2;
+        m_playArea = sf::IntRect(x, y, width, height);
     }
     
     void CardsState::generateDeck() {
@@ -132,18 +160,22 @@ namespace as
     
     void CardsState::drawCards() const {
         for (auto *card: m_cardDeck) {
-            this->m_data->window.draw(*card);
+            m_data->window.draw(*card);
+        }
+        
+        for (auto *card: m_playAreaCards) {
+            m_data->window.draw(*card);
         }
         
         for (int i=0; i<CARD_HAND_COUNT; ++i) {
             if (m_playerHand[i] != nullptr) {
                 Card *card = m_playerHand[i];
-                this->m_data->window.draw(*card);
+                m_data->window.draw(*card);
             }
             
             if (m_aiHand[i] != nullptr) {
                 Card *card = m_aiHand[i];
-                this->m_data->window.draw(*card);
+                m_data->window.draw(*card);
             }
         }
     }
@@ -202,6 +234,68 @@ namespace as
                 m_animations.erase(m_animations.begin() + i);
             } else {
                 ++i;
+            }
+        }
+    }
+    
+    Card* CardsState::getSelectedCard() const {
+        
+        if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+            return nullptr;
+        }
+        
+        if (m_selectedCard != nullptr) {
+            return m_selectedCard;
+        }
+        
+        Card* selectedCard = nullptr;
+        sf::Vector2i mousePosition = sf::Mouse::getPosition(m_data->window); //m_data->input.GetMousePosition(m_data->window);
+        
+        for (auto *card: m_playerHand) {
+            if (card == nullptr) {
+                continue;
+            }
+            
+            sf::Vector2f cardOrigin = card->getPosition(); // card middle
+            int x = cardOrigin.x - (m_cardSize.x / 2);
+            int y = cardOrigin.y - (m_cardSize.y / 2);
+            sf::IntRect rect(x, y, m_cardSize.x, m_cardSize.y);
+            
+            if (rect.contains(mousePosition.x, mousePosition.y)) {
+                selectedCard = card;
+                break;
+            }
+        }
+        
+        return selectedCard;
+    }
+    
+    void CardsState::moveCardFromHandToPlayArea(Card *card) {
+        auto &hand = m_isPlayerTurn ? m_playerHand : m_aiHand;
+        
+        m_playAreaCards.push_back(m_selectedCard);
+        
+        for (int i=0; i<hand.size(); ++i) {
+            if (hand[i] == card) {
+                hand[i] = nullptr;
+                break;
+            }
+        }
+    }
+    
+    void CardsState::alignMisplacedCards() {
+        auto &hand = m_isPlayerTurn ? m_playerHand : m_aiHand;
+        
+        for (int i=0; i<hand.size(); ++i) {
+            Card *card = hand[i];
+            
+            if (card == nullptr) {
+                continue;
+            }
+            
+            auto position = getPositionOfHandCardAtIndex(i);
+            if (card->getPosition() != position) {
+                m_animations.emplace_back(card, position);
             }
         }
     }

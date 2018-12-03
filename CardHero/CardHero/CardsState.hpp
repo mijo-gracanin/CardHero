@@ -41,13 +41,18 @@ namespace as
         std::vector<Card *> m_cardDeck;
         std::vector<Card *> m_playerWonCards;
         std::vector<Card *> m_aiWonCards;
+        std::vector<Card *> m_playAreaCards;
         std::vector<CardAnimation> m_animations;
         std::array<Card *, CARD_HAND_COUNT> m_playerHand;
         std::array<Card *, CARD_HAND_COUNT> m_aiHand;
         sf::Vector2f m_cardSize;
         bool m_isPlayerTurn;
+        Card *m_selectedCard;
+        sf::Vector2i m_mousePosition;
+        sf::IntRect m_playArea;
         
         void setupCardSize();
+        void setupPlayAreaRect();
         void generateDeck();
         void shuffleDeck();
         void updateDeckPosition();
@@ -57,6 +62,9 @@ namespace as
         int getFreeCardSlotIndex(std::array<Card *, CARD_HAND_COUNT> &hand) const;
         sf::Vector2f getPositionOfHandCardAtIndex(int index) const;
         void purgeCompletedAnimations();
+        Card* getSelectedCard() const;
+        void moveCardFromHandToPlayArea(Card *card);
+        void alignMisplacedCards();
     };
 }
 

@@ -26,6 +26,8 @@ namespace as {
         m_cardShape.setOutlineColor(sf::Color::White);
         m_cardShape.setOutlineThickness(2);
         m_cardShape.setOrigin(size.x / 2, size.y / 2);
+        
+        m_cardText.setOrigin(m_cardShape.getOrigin().x, m_cardShape.getOrigin().y);
     };
     
     void Card::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -35,6 +37,12 @@ namespace as {
     
     void Card::setPosition(float x, float y) {
         m_cardShape.setPosition(x, y);
+        m_cardText.setPosition(x, y);
+    }
+    
+    void Card::move(float x, float y) {
+        sf::Vector2f position = m_cardShape.getPosition();
+        setPosition(position.x + x, position.y + y);
     }
     
     sf::Vector2f Card::getPosition() const {

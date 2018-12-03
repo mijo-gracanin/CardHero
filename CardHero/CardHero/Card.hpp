@@ -42,6 +42,7 @@ namespace as
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         static sf::Color getColorForCardColor(CardColor color);
         void setPosition(float x, float y);
+        void move(float x, float y);
         sf::Vector2f getPosition() const;
         
     private:
