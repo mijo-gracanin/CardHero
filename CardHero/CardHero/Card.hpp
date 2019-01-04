@@ -40,10 +40,12 @@ namespace as
     public:
         Card(CardColor color, CardTrait trait, size size);
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-        static sf::Color getColorForCardColor(CardColor color);
+        static sf::Color getSFColorForCardColor(CardColor color);
         void setPosition(float x, float y);
         void move(float x, float y);
         sf::Vector2f getPosition() const;
+        CardColor getColor() const;
+        bool canPlayAgainst(Card *card) const;
         
     private:
         CardColor m_color;

@@ -22,7 +22,7 @@ namespace as {
         float radius = size.x / 8;
         m_cardShape.setCornersRadius(radius);
         m_cardShape.setCornerPointCount(4);
-        m_cardShape.setFillColor(getColorForCardColor(m_color));
+        m_cardShape.setFillColor(getSFColorForCardColor(m_color));
         m_cardShape.setOutlineColor(sf::Color::White);
         m_cardShape.setOutlineThickness(2);
         m_cardShape.setOrigin(size.x / 2, size.y / 2);
@@ -49,7 +49,7 @@ namespace as {
         return m_cardShape.getPosition();
     }
     
-    sf::Color Card::getColorForCardColor(CardColor color) {
+    sf::Color Card::getSFColorForCardColor(CardColor color) {
         switch (color) {
             case ALL:
                 return sf::Color::Magenta;
@@ -62,5 +62,14 @@ namespace as {
             case YELLOW:
                 return sf::Color::Yellow;
         }
+    }
+    
+    CardColor Card::getColor() const {
+        return m_color;
+    }
+    
+    bool Card::canPlayAgainst(Card *card) const {
+        
+        return m_color == card->getColor() || m_color == ALL;
     }
 }

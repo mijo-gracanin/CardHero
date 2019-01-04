@@ -65,6 +65,15 @@ namespace as
         Card* getSelectedCard() const;
         void moveCardFromHandToPlayArea(Card *card);
         void alignMisplacedCards();
+        bool doesHandContainColor(CardColor color) const;
+        void movePlayAreaCardsToWonPile();
+        sf::Vector2f getPositionForCardOnWiningPile() const;
+        void playAITurn();
+        sf::Vector2f getRandomPositionInPlayArea() const;
+        void playSelectedCard();
+        void handleDragGestureForEvent(sf::Event event);
+        bool shouldTakePlayAreaCards() const;
+        void skipTurnIfPossible();
     };
 }
 
