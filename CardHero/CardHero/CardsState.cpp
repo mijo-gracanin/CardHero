@@ -69,9 +69,13 @@ namespace as
             if (!m_isPlayerTurn) {
                 playAITurn();
             }
-            else if (!m_playAreaCards.empty() && m_playAreaCards.size() % 2 == 0 && shouldTakePlayAreaCards()) {
+            else if (!m_playAreaCards.empty() && m_playAreaCards.size() % 2 == 0) {
+                if (shouldTakePlayAreaCards()) {
                 movePlayAreaCardsToWonPile();
                 m_currentState = DEAL_CARDS;
+                } else if (!doesHandContainColor(m_playAreaCards.front()->getColor())) {
+                    skipTurnIfPossible();
+                }
             }
         }
     }
@@ -316,7 +320,7 @@ namespace as
                 continue;
             }
             
-            if (card->getColor() == color) {
+            if (card->getColor() == color || card->getColor() == ALL) {
                 return true;
             }
         }
@@ -369,7 +373,7 @@ namespace as
             }
         } else if (m_playAreaCards.size() % 2 != 0) {
             
-            Card *topCard = m_playAreaCards.back();
+            Card *bottomCard = m_playAreaCards.front();
             Card *cardToPlay = nullptr;
             
             for (auto *card: m_aiHand) {
@@ -379,7 +383,7 @@ namespace as
                 
                 cardToPlay = card;
                 
-                if (card->canPlayAgainst(topCard)) {
+                if (card->canPlayAgainst(bottomCard)) {
                     break;
                 }
             }
@@ -394,7 +398,7 @@ namespace as
                 return;
             }
             
-            Card *topCard = m_playAreaCards.back();
+            Card *bottomCard = m_playAreaCards.front();
             Card *cardToPlay = nullptr;
             
             for (auto *card: m_aiHand) {
@@ -402,7 +406,7 @@ namespace as
                     continue;
                 }
                 
-                if (card->canPlayAgainst(topCard)) {
+                if (card->canPlayAgainst(bottomCard)) {
                     cardToPlay = card;
                     break;
                 }
@@ -471,9 +475,9 @@ namespace as
             moveCardFromHandToPlayArea(m_selectedCard);
             m_isPlayerTurn = false;
         } else {
-            Card *topCard = m_playAreaCards.back();
+            Card *bottomCard = m_playAreaCards.front();
             
-            if (m_selectedCard->canPlayAgainst(topCard)) {
+            if (m_selectedCard->canPlayAgainst(bottomCard)) {
                 moveCardFromHandToPlayArea(m_selectedCard);
                 m_isPlayerTurn = false;
             } else {
@@ -483,10 +487,10 @@ namespace as
     }
     
     bool CardsState::shouldTakePlayAreaCards() const {
-        Card *firstTopCard = m_playAreaCards.back();
-        Card *secondTopCard = m_playAreaCards.at(m_playAreaCards.size() - 2);
+        Card *topCard = m_playAreaCards.back();
+        Card *bottomCard = m_playAreaCards.front();
         
-        return !firstTopCard->canPlayAgainst(secondTopCard);
+        return !topCard->canPlayAgainst(bottomCard);
     }
     
     void CardsState::skipTurnIfPossible() {
