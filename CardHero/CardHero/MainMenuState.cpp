@@ -23,6 +23,9 @@ namespace as
     button1.setOrigin(button1.getGlobalBounds().width/2,button1.getGlobalBounds().height/2);
     button2.setPosition(this->_data->window.getSize().x/2,(this->_data->window.getSize().y/2)+100);
     button2.setOrigin(button2.getGlobalBounds().width/2,button2.getGlobalBounds().height/2);
+    menuMusic.openFromFile(BACKGROUND_MENU_MUSIC_FILEPATH);
+    menuMusic.setVolume(15.0f);
+    menuMusic.play();
     }
 
 
@@ -39,7 +42,7 @@ namespace as
             }
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(button1.getGlobalBounds().contains(sf::Mouse::getPosition(this->_data->window).x,sf::Mouse::getPosition(this->_data->window).y)))
-        this->_data->machine.AddState(StateRef(new CardsState(_data)),true);
+        this->_data->machine.AddState(StateRef(new CardsState(_data)),true),menuMusic.stop();
 
 
 

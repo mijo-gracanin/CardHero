@@ -10,3 +10,4 @@
 #define BUTTON2_TEXTURE_FILEPATH "button2tex.png"
 
 #define BACKGROUND_MUSIC_FILEPATH "intro.wav"
+#define BACKGROUND_MENU_MUSIC_FILEPATH "bkMusic.ogg"
