@@ -417,9 +417,10 @@
 	<SFML/Audio.hpp>
 	<SFML/Graphics.hpp>
 
-1542141452 source:f:\projects\cardhero\cardhero\cardhero\game.cpp
+1546945725 source:f:\projects\cardhero\cardhero\cardhero\game.cpp
 	"Game.h"
 	"SplashState.h"
+	"CardsState.hpp"
 
 1542038309 f:\projects\cardhero\cardhero\cardhero\game.h
 	<memory>
@@ -455,7 +456,7 @@
 	"Game.h"
 	"DEFINITIONS.h"
 
-1542143385 f:\projects\cardhero\cardhero\cardhero\definitions.h
+1546946369 f:\projects\cardhero\cardhero\cardhero\definitions.h
 
 1542139759 source:f:\projects\cardhero\cardhero\cardhero\splashstate.cpp
 	<sstream>
@@ -575,33 +576,55 @@
 1541941698 f:\projects\cardhero\cardhero\cardhero\collision.h
 	<SFML/Graphics.hpp>
 
-1542040460 source:f:\projects\cardhero\cardhero\cardhero\cardsstate.cpp
-	"CardsState.hpp"
-	"SplashState.h"
+1546944281 source:f:\projects\cardhero\cardhero\cardhero\cardsstate.cpp
 	"DEFINITIONS.h"
-	<SFML/Audio.hpp>
+	"CardsState.hpp"
+	"InputManager.h"
+	"Game.h"
+	<iostream>
 
-1542040460 f:\projects\cardhero\cardhero\cardhero\cardsstate.hpp
+1546944281 f:\projects\cardhero\cardhero\cardhero\cardsstate.hpp
 	<SFML/Graphics.hpp>
+	<array>
 	"State.h"
 	"Game.h"
+	"Card.hpp"
+	"CardAnimation.hpp"
 
-1542126821 source:f:\projects\cardhero\cardhero\cardhero\card.cpp
+1546944641 source:f:\projects\cardhero\cardhero\cardhero\card.cpp
 	"Card.hpp"
 
-1542127102 f:\projects\cardhero\cardhero\cardhero\card.hpp
+1546944281 f:\projects\cardhero\cardhero\cardhero\card.hpp
 	<stdio.h>
+	<SFML/Graphics.hpp>
+	"RoundedRectangleShape.hpp"
 
-1542141276 f:\projects\cardhero\cardhero\cardhero\mainmenustate.h
+1546945977 f:\projects\cardhero\cardhero\cardhero\mainmenustate.h
 	<SFML/Audio.hpp>
 	<SFML/Graphics.hpp>
 	"State.h"
 	"Game.h"
 
-1542139833 source:f:\projects\cardhero\cardhero\cardhero\mainmenustate.cpp
+1546947964 source:f:\projects\cardhero\cardhero\cardhero\mainmenustate.cpp
 	<sstream>
+	"CardsState.hpp"
 	"MainMenuState.h"
 	"DEFINITIONS.h"
 	<SFML/Audio.hpp>
 	<iostream>
+
+1542647788 f:\projects\cardhero\cardhero\cardhero\roundedrectangleshape.hpp
+	<SFML/Graphics/Shape.hpp>
+
+1543429594 source:f:\projects\cardhero\cardhero\cardhero\cardanimation.cpp
+	"CardAnimation.hpp"
+	<cmath>
+
+1543844417 f:\projects\cardhero\cardhero\cardhero\cardanimation.hpp
+	<stdio.h>
+	"Card.hpp"
+
+1542647788 source:f:\projects\cardhero\cardhero\cardhero\roundedrectangleshape.cpp
+	"RoundedRectangleShape.hpp"
+	<cmath>
 

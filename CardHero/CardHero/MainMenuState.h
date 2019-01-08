@@ -24,6 +24,8 @@ namespace as
 
     sf::Sprite menuBackground;
     sf::Music menuMusic;
+    sf::Sprite button1,button2;
+
 
 
    };
