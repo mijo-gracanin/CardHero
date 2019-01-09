@@ -2,6 +2,7 @@
 #include "SplashState.h"
 #include "DEFINITIONS.h"
 #include "MainMenuState.h"
+#include "ResourcePath.hpp"
 #include <SFML/Audio.hpp>
 
 #include <iostream>
@@ -17,7 +18,7 @@ namespace as
     {
         //this->_data->assets.LoadTexture("Splash State Background",SPLASH_SCENE_BACKGROUND_FILEPATH);     need to import a backgorund picture for splash screen
       //_background.setTexture(this->_data->assets.GetTexture("Splash State Background"));
-        _introB.loadFromFile(BACKGROUND_MUSIC_FILEPATH);
+        _introB.loadFromFile(resourcePath() + BACKGROUND_MUSIC_FILEPATH);
         _intro.setBuffer(_introB);
         _intro.play();
     }
