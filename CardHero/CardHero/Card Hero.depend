@@ -456,7 +456,7 @@
 	"Game.h"
 	"DEFINITIONS.h"
 
-1546948993 f:\projects\cardhero\cardhero\cardhero\definitions.h
+1546954659 f:\projects\cardhero\cardhero\cardhero\definitions.h
 
 1542139759 source:f:\projects\cardhero\cardhero\cardhero\splashstate.cpp
 	<sstream>
@@ -570,7 +570,7 @@
 	<SFML/Audio/Export.hpp>
 	<string>
 
-1541945213 source:f:\projects\cardhero\cardhero\cardhero\collision.cpp
+1547061919 source:f:\projects\cardhero\cardhero\cardhero\collision.cpp
 	"Collision.h"
 
 1541941698 f:\projects\cardhero\cardhero\cardhero\collision.h
@@ -605,9 +605,10 @@
 	"State.h"
 	"Game.h"
 
-1546949117 source:f:\projects\cardhero\cardhero\cardhero\mainmenustate.cpp
+1546960283 source:f:\projects\cardhero\cardhero\cardhero\mainmenustate.cpp
 	<sstream>
 	"CardsState.hpp"
+	"PlatformerState.h"
 	"MainMenuState.h"
 	"DEFINITIONS.h"
 	<SFML/Audio.hpp>
@@ -627,4 +628,18 @@
 1542647788 source:f:\projects\cardhero\cardhero\cardhero\roundedrectangleshape.cpp
 	"RoundedRectangleShape.hpp"
 	<cmath>
+
+1546960207 source:f:\projects\cardhero\cardhero\cardhero\platformerstate.cpp
+	<sstream>
+	"MainMenuState.h"
+	"PlatformerState.h"
+	"DEFINITIONS.h"
+	<SFML/Audio.hpp>
+	<iostream>
+
+1546960117 f:\projects\cardhero\cardhero\cardhero\platformerstate.h
+	<SFML/Audio.hpp>
+	<SFML/Graphics.hpp>
+	"State.h"
+	"Game.h"
 

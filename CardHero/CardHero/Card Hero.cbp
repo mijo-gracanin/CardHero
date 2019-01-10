@@ -14,6 +14,7 @@
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add directory="../CardHero" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics-d" />
@@ -30,6 +31,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="../CardHero" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -54,6 +56,8 @@
 		<Unit filename="AssetManager.h" />
 		<Unit filename="Card.cpp" />
 		<Unit filename="Card.hpp" />
+		<Unit filename="CardAnimation.cpp" />
+		<Unit filename="CardAnimation.hpp" />
 		<Unit filename="CardsState.cpp" />
 		<Unit filename="CardsState.hpp" />
 		<Unit filename="Collision.cpp" />
@@ -65,6 +69,11 @@
 		<Unit filename="InputManager.h" />
 		<Unit filename="MainMenuState.cpp" />
 		<Unit filename="MainMenuState.h" />
+		<Unit filename="PlatformerState.cpp" />
+		<Unit filename="PlatformerState.h" />
+		<Unit filename="ResourcePath.hpp" />
+		<Unit filename="RoundedRectangleShape.cpp" />
+		<Unit filename="RoundedRectangleShape.hpp" />
 		<Unit filename="SplashState.cpp" />
 		<Unit filename="SplashState.h" />
 		<Unit filename="State.h" />

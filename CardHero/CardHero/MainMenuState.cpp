@@ -1,5 +1,6 @@
 #include <sstream>
 #include "CardsState.hpp"
+#include "PlatformerState.h"
 #include "MainMenuState.h"
 #include "DEFINITIONS.h"
 #include <SFML/Audio.hpp>
@@ -26,6 +27,8 @@ namespace as
     menuMusic.openFromFile(BACKGROUND_MENU_MUSIC_FILEPATH);
     menuMusic.setVolume(15.0f);
     menuMusic.play();
+    menuMusic.setLoop(true);
+
     }
 
 
@@ -43,6 +46,8 @@ namespace as
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(button1.getGlobalBounds().contains(sf::Mouse::getPosition(this->_data->window).x,sf::Mouse::getPosition(this->_data->window).y)))
         this->_data->machine.AddState(StateRef(new CardsState(_data)),true),menuMusic.stop();
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(button2.getGlobalBounds().contains(sf::Mouse::getPosition(this->_data->window).x,sf::Mouse::getPosition(this->_data->window).y)))
+        this->_data->machine.AddState(StateRef(new PlatformerState(_data)),true),menuMusic.stop();
 
 
 
