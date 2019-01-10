@@ -32,12 +32,6 @@
 ////////////////////////////////////////////////////////////
 std::string resourcePath(void)
 {
-    // Start of alternation from original source
-#ifndef __APPLE__
-    return std::string("");
-#endif
-    // End of alternation
-    
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     std::string rpath;
