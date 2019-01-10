@@ -2,6 +2,7 @@
 #include "CardsState.hpp"
 #include "PlatformerState.h"
 #include "MainMenuState.h"
+#include "ResourcePath.hpp"
 #include "DEFINITIONS.h"
 #include <SFML/Audio.hpp>
 #include <iostream>
@@ -16,15 +17,15 @@ namespace as
     }
     void MainMenuState::Init()
     {
-    this->_data->assets.LoadTexture("Button1 Texture",BUTTON1_TEXTURE_FILEPATH);
-    this->_data->assets.LoadTexture("Button2 Texture",BUTTON2_TEXTURE_FILEPATH);
+    this->_data->assets.LoadTexture("Button1 Texture", resourcePath() + BUTTON1_TEXTURE_FILEPATH);
+    this->_data->assets.LoadTexture("Button2 Texture", resourcePath() + BUTTON2_TEXTURE_FILEPATH);
     button1.setTexture(this->_data->assets.GetTexture("Button1 Texture"));
     button2.setTexture(this->_data->assets.GetTexture("Button2 Texture"));
     button1.setPosition(this->_data->window.getSize().x/2,(this->_data->window.getSize().y/2)-100);
     button1.setOrigin(button1.getGlobalBounds().width/2,button1.getGlobalBounds().height/2);
     button2.setPosition(this->_data->window.getSize().x/2,(this->_data->window.getSize().y/2)+100);
     button2.setOrigin(button2.getGlobalBounds().width/2,button2.getGlobalBounds().height/2);
-    menuMusic.openFromFile(BACKGROUND_MENU_MUSIC_FILEPATH);
+    menuMusic.openFromFile(resourcePath() + BACKGROUND_MENU_MUSIC_FILEPATH);
     menuMusic.setVolume(15.0f);
     menuMusic.play();
     menuMusic.setLoop(true);
