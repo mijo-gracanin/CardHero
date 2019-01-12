@@ -26,6 +26,7 @@ namespace as
         DEAL_CARDS, PLAY_CARDS, GAME_OVER
     };
     
+    
     class CardsState : public State {
     public:
         CardsState(GameDataRef data);

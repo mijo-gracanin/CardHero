@@ -11,6 +11,7 @@
 #include "InputManager.h"
 #include "Game.h"
 #include <iostream>
+#include <random>
 
 
 namespace as
@@ -120,10 +121,14 @@ namespace as
     }
     
     void CardsState::shuffleDeck() {
-        // TODO: shuffle cards
+        
         for (auto &card: m_cards) {
             m_cardDeck.push_back(&card);
         }
+        
+        std::random_device rd;
+        std::mt19937 mersenne(rd());
+        std::shuffle(m_cardDeck.begin(), m_cardDeck.end(), mersenne);
     }
     
     void CardsState::updateDeckPosition() {
