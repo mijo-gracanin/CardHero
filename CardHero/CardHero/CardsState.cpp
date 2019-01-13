@@ -228,7 +228,7 @@ namespace as
         float widthOfCardsInHand = CARD_HAND_COUNT * m_cardSize.x;
         float paddingBetweenCardsInHand = (CARD_HAND_COUNT - 1) * paddingBetweenCards;
         float handWidth = widthOfCardsInHand + paddingBetweenCardsInHand;
-        float firstCard_x = screenMiddle - (handWidth / 2);
+        float firstCard_x = screenMiddle - (handWidth / 2) + (m_cardSize.x / 2);
         float x = firstCard_x + (index * (m_cardSize.x + paddingBetweenCards));
         
         float y;
@@ -336,7 +336,7 @@ namespace as
     void CardsState::movePlayAreaCardsToWonPile() {
         auto &winingPile = m_isPlayerTurn ? m_playerWonCards : m_aiWonCards;
         
-        for (auto *card: m_playAreaCards) { // TODO: use vector1.swap(vector2) ?
+        for (auto *card: m_playAreaCards) {
             winingPile.push_back(card);
             sf::Vector2f position = getPositionForCardOnWiningPile();
             m_animations.emplace_back(card, position);
@@ -349,15 +349,15 @@ namespace as
         auto &winingPile = m_isPlayerTurn ? m_playerWonCards : m_aiWonCards;
         sf::Vector2u windowSize = m_data->window.getSize();
         float paddingBetweenCards = m_cardSize.x / 10;
-        int x = windowSize.x - paddingBetweenCards - (m_cardSize.x /2);
+        int x = windowSize.x - paddingBetweenCards - (m_cardSize.x / 2);
         int verticalOffset = 3;
         int y;
         
         if (m_isPlayerTurn) {
-            y = windowSize.y - paddingBetweenCards - (winingPile.size() * verticalOffset);
+            y = windowSize.y - (m_cardSize.y / 2) - paddingBetweenCards - (winingPile.size() * verticalOffset);
         } else {
             int maxStackHeight = verticalOffset * m_cards.size() + m_cardSize.y;
-            y = maxStackHeight + paddingBetweenCards - (winingPile.size() * verticalOffset);
+            y = (maxStackHeight / 2) + paddingBetweenCards - (winingPile.size() * verticalOffset);
         }
         
         return sf::Vector2f(x, y);
