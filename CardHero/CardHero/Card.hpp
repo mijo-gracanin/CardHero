@@ -40,7 +40,6 @@ namespace as
     public:
         Card(CardColor color, CardTrait trait, size size);
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-        static sf::Color getSFColorForCardColor(CardColor color);
         void setPosition(float x, float y);
         void move(float x, float y);
         sf::Vector2f getPosition() const;
@@ -52,7 +51,12 @@ namespace as
         CardTrait m_trait;
         sf::RoundedRectangleShape m_cardShape;
         sf::Text m_cardText;
+        sf::VertexArray m_gradient;
         bool m_isRevealed;
+        
+        static sf::Color getSFColorForCardColor(CardColor color);
+        void setupGradient();
+        void updateGradientPosition();
     };
 }
 

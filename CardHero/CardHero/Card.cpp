@@ -26,18 +26,29 @@ namespace as {
         m_cardShape.setOutlineColor(sf::Color::White);
         m_cardShape.setOutlineThickness(2);
         m_cardShape.setOrigin(size.x / 2, size.y / 2);
-        
         m_cardText.setOrigin(m_cardShape.getOrigin().x, m_cardShape.getOrigin().y);
+        
+        if (m_color == ALL) {
+            setupGradient();
+        }
     };
     
     void Card::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(m_cardShape, states);
         target.draw(m_cardText, states);
+        
+        if (m_color == ALL) {
+            target.draw(m_gradient, states);
+        }
     }
     
     void Card::setPosition(float x, float y) {
         m_cardShape.setPosition(x, y);
         m_cardText.setPosition(x, y);
+        
+        if (m_color == ALL) {
+            updateGradientPosition();
+        }
     }
     
     void Card::move(float x, float y) {
@@ -71,5 +82,38 @@ namespace as {
     bool Card::canPlayAgainst(Card *card) const {
         
         return m_color == card->getColor() || m_color == ALL;
+    }
+    
+    void Card::setupGradient() {
+        
+        sf::Color colors [] = {sf::Color::Blue, sf::Color::Green,sf::Color::Red, sf::Color::Yellow};
+        int pointCount = m_cardShape.getPointCount();
+        m_gradient = sf::VertexArray(sf::TrianglesFan, pointCount + 2);
+        
+        sf::Vertex &centralVertex = m_gradient[0];
+        centralVertex.color = sf::Color(205, 205, 205);
+        
+        for (int i=0; i < m_cardShape.getPointCount(); ++i) {
+            sf::Vertex &vertex = m_gradient[i + 1];
+            vertex.color = colors[i / 4];
+        }
+        
+        sf::Vertex &closingVertex = m_gradient[m_gradient.getVertexCount() - 1];
+        closingVertex.color = colors[0];
+    }
+    
+    void Card::updateGradientPosition() {
+        sf::Vertex &centralVertex = m_gradient[0];
+        sf::Vector2f center = getPosition();
+        centralVertex.position = center;
+        
+        int pointCount = m_cardShape.getPointCount();
+        
+        for (int i=0; i<pointCount; ++i) {
+            m_gradient[i + 1].position = center - m_cardShape.getPoint(i) + m_cardShape.getOrigin();
+        }
+        
+        sf::Vertex &closingVertex = m_gradient[m_gradient.getVertexCount() - 1];
+        closingVertex.position = center - m_cardShape.getPoint(0) + m_cardShape.getOrigin();
     }
 }
