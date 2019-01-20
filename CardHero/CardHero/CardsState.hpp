@@ -51,6 +51,8 @@ namespace as
         Card *m_selectedCard;
         sf::Vector2i m_mousePosition;
         sf::IntRect m_playArea;
+        sf::IntRect m_snapArea;
+        sf::RectangleShape m_playAreaOutline;
         
         void setupCardSize();
         void setupPlayAreaRect();
@@ -70,7 +72,6 @@ namespace as
         void movePlayAreaCardsToWonPile();
         sf::Vector2f getPositionForCardOnWiningPile() const;
         void playAITurn();
-        sf::Vector2f getRandomPositionInPlayArea() const;
         void playSelectedCard();
         void handleDragGestureForEvent(sf::Event event);
         bool shouldTakePlayAreaCards() const;

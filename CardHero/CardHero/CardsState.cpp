@@ -9,9 +9,10 @@
 #include "DEFINITIONS.h"
 #include "CardsState.hpp"
 #include "InputManager.h"
-#include "Game.h"
 #include <iostream>
 #include <random>
+#include <algorithm>
+#include <memory>
 
 
 namespace as
@@ -21,7 +22,8 @@ namespace as
     CardsState::CardsState(GameDataRef data):
     m_data(data),
     m_isPlayerTurn(true),
-    m_selectedCard(nullptr)
+    m_selectedCard(nullptr),
+    m_playAreaOutline(sf::RectangleShape())
     {
         m_playerHand.fill(nullptr);
         m_aiHand.fill(nullptr);
@@ -83,11 +85,12 @@ namespace as
     
     void CardsState::Draw(float dt)
     {
-        this->m_data->window.clear();
+        m_data->window.clear();
         
+        //m_data->window.draw(m_playAreaOutline);
         drawCards();
         
-        this->m_data->window.display();
+        m_data->window.display();
     }
     
     #pragma mark - Private methods
@@ -102,10 +105,26 @@ namespace as
     void CardsState::setupPlayAreaRect() {
         sf::Vector2u windowSize = m_data->window.getSize();
         int width = windowSize.x / 12;
-        int height = width * 2;
+        int desiredHeight = width * 2;
+        int handVerticalMargin = m_cardSize.x / 10;
+        int availableHeight = (int)(windowSize.y - (m_cardSize.y - handVerticalMargin) * 2 - m_cardSize.y - 2);
+        int height = std::min(desiredHeight, availableHeight);
         int x = (windowSize.x - width) / 2;
         int y = (windowSize.y - height) / 2;
         m_playArea = sf::IntRect(x, y, width, height);
+        
+        int snapLeft = getPositionOfHandCardAtIndex(0).x - handVerticalMargin;
+        int snapRight = getPositionOfHandCardAtIndex(CARD_HAND_COUNT - 1).x + handVerticalMargin;
+        int snapWidth = snapRight - snapLeft;
+        int snapTop = handVerticalMargin * 2 + m_cardSize.y;
+        int snapHeight = windowSize.y - (snapTop * 2);
+        m_snapArea = sf::IntRect(snapLeft, y, snapWidth, height);
+        
+        m_playAreaOutline.setSize(sf::Vector2f(snapWidth, snapHeight));
+        m_playAreaOutline.setPosition(snapLeft, snapTop);
+        m_playAreaOutline.setFillColor(sf::Color::Black);
+        m_playAreaOutline.setOutlineColor(sf::Color::White);
+        m_playAreaOutline.setOutlineThickness(1);
     }
     
     void CardsState::generateDeck() {
@@ -298,6 +317,22 @@ namespace as
                 break;
             }
         }
+        
+        sf::Vector2f position = card->getPosition();
+        
+        if (m_playArea.contains(position.x, position.y)) {
+            return;
+        }
+        
+        if (!m_playArea.contains(position.x, m_playArea.top + 1)) {
+            position.x = m_playArea.left + (rand() % m_playArea.width);
+        }
+        
+        if (!m_playArea.contains(m_playArea.left + 1, position.y)) {
+            position.y = m_playArea.top + (rand() % m_playArea.height);
+        }
+        
+        m_animations.emplace_back(card, position);
     }
     
     void CardsState::alignMisplacedCards() {
@@ -372,7 +407,6 @@ namespace as
                 }
                 
                 moveCardFromHandToPlayArea(card);
-                m_animations.emplace_back(card, getRandomPositionInPlayArea());
                 m_isPlayerTurn = true;
                 break;
             }
@@ -394,7 +428,6 @@ namespace as
             }
             
             moveCardFromHandToPlayArea(cardToPlay);
-            m_animations.emplace_back(cardToPlay, getRandomPositionInPlayArea());
             m_isPlayerTurn = true;
         } else {
             if (shouldTakePlayAreaCards()) {
@@ -423,16 +456,9 @@ namespace as
                 m_currentState = DEAL_CARDS;
             } else {
                 moveCardFromHandToPlayArea(cardToPlay);
-                m_animations.emplace_back(cardToPlay, getRandomPositionInPlayArea());
                 m_isPlayerTurn = true;
             }
         }
-    }
-    
-    sf::Vector2f CardsState::getRandomPositionInPlayArea() const {
-        float x = m_playArea.left + (rand() % m_playArea.width);
-        float y = m_playArea.top + (rand() % m_playArea.height);
-        return sf::Vector2f(x, y);
     }
     
     void CardsState::handleDragGestureForEvent(sf::Event event) {
@@ -452,7 +478,7 @@ namespace as
                    m_selectedCard != nullptr) {
             
             sf::Vector2f postition = m_selectedCard->getPosition();
-            if (m_playArea.contains(postition.x, postition.y)) {
+            if (m_snapArea.contains(postition.x, postition.y)) {
                 playSelectedCard();
             } else {
                 alignMisplacedCards();
@@ -476,7 +502,6 @@ namespace as
             m_isPlayerTurn = false;
         } else if (m_playAreaCards.size() % 2 != 0) {
             
-            Card *topCard = m_playAreaCards.back();
             moveCardFromHandToPlayArea(m_selectedCard);
             m_isPlayerTurn = false;
         } else {

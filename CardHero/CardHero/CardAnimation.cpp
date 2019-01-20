@@ -49,8 +49,8 @@ namespace as
         
         sf::Vector2f position = m_card->getPosition();
         
-        if (abs(m_destinationPoint.x - position.x) < abs(offsetX) &&
-            abs(m_destinationPoint.y - position.y) < abs(offsetY)) {
+        if (abs(m_destinationPoint.x - position.x) <= abs(offsetX) &&
+            abs(m_destinationPoint.y - position.y) <= abs(offsetY)) {
             m_card->setPosition(m_destinationPoint.x, m_destinationPoint.y);
             m_isCompleted = true;
         } else {
