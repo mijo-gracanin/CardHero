@@ -9,6 +9,8 @@
 #include "DEFINITIONS.h"
 #include "CardsState.hpp"
 #include "InputManager.h"
+#include "TransitionCardAnimation.hpp"
+#include "FlipCardAnimation.hpp"
 #include <iostream>
 #include <random>
 #include <algorithm>
@@ -59,7 +61,7 @@ namespace as
     {
         if (!m_animations.empty()) {
             for (auto &animation: m_animations) {
-                animation.update(dt);
+                animation->update(dt);
             }
             purgeCompletedAnimations();
             return;
@@ -181,7 +183,10 @@ namespace as
             int freeCardSlotIndex = getFreeCardSlotIndex(hand);
             hand[freeCardSlotIndex] = card;
             sf::Vector2f destination = getPositionOfHandCardAtIndex(freeCardSlotIndex);
-            m_animations.emplace_back(card, destination);
+            m_animations.push_back(std::make_unique<TransitionCardAnimation>(card, destination));
+            if (m_isPlayerTurn) {
+                m_animations.push_back(std::make_unique<FlipCardAnimation>(card));
+            }
             m_isPlayerTurn = !m_isPlayerTurn;
         }
     }
@@ -266,7 +271,7 @@ namespace as
         while (i < m_animations.size()) {
             auto &animation = m_animations[i];
             
-            if (animation.getIsCompleted()) {
+            if (animation->getIsCompleted()) {
                 m_animations.erase(m_animations.begin() + i);
             } else {
                 ++i;
@@ -332,7 +337,10 @@ namespace as
             position.y = m_playArea.top + (rand() % m_playArea.height);
         }
         
-        m_animations.emplace_back(card, position);
+        m_animations.push_back(std::make_unique<TransitionCardAnimation>(card, position));
+        if (!m_isPlayerTurn) {
+            m_animations.push_back(std::make_unique<FlipCardAnimation>(card));
+        }
     }
     
     void CardsState::alignMisplacedCards() {
@@ -347,7 +355,7 @@ namespace as
             
             auto position = getPositionOfHandCardAtIndex(i);
             if (card->getPosition() != position) {
-                m_animations.emplace_back(card, position);
+                m_animations.push_back(std::make_unique<TransitionCardAnimation>(card, position));
             }
         }
     }
@@ -374,7 +382,7 @@ namespace as
         for (auto *card: m_playAreaCards) {
             winingPile.push_back(card);
             sf::Vector2f position = getPositionForCardOnWiningPile();
-            m_animations.emplace_back(card, position);
+            m_animations.push_back(std::make_unique<TransitionCardAnimation>(card, position));
         }
         
         m_playAreaCards.clear();

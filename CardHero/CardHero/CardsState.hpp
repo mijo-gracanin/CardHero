@@ -14,7 +14,7 @@
 #include "State.h"
 #include "Game.h"
 #include "Card.hpp"
-#include "CardAnimation.hpp"
+#include "CardAnimation.h"
 
 namespace as
 {
@@ -43,7 +43,7 @@ namespace as
         std::vector<Card *> m_playerWonCards;
         std::vector<Card *> m_aiWonCards;
         std::vector<Card *> m_playAreaCards;
-        std::vector<CardAnimation> m_animations;
+        std::vector<std::unique_ptr<CardAnimation>> m_animations;
         std::array<Card *, CARD_HAND_COUNT> m_playerHand;
         std::array<Card *, CARD_HAND_COUNT> m_aiHand;
         sf::Vector2f m_cardSize;

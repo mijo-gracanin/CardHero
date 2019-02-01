@@ -45,6 +45,9 @@ namespace as
         sf::Vector2f getPosition() const;
         CardColor getColor() const;
         bool canPlayAgainst(Card *card) const;
+        bool getIsRevealed();
+        void setIsRevealed(bool isReveald);
+        void setHorizontalScale(float scale);
         
     private:
         CardColor m_color;

@@ -22,7 +22,7 @@ namespace as {
         float radius = size.x / 8;
         m_cardShape.setCornersRadius(radius);
         m_cardShape.setCornerPointCount(4);
-        m_cardShape.setFillColor(getSFColorForCardColor(m_color));
+        m_cardShape.setFillColor(sf::Color(205, 205, 205));
         m_cardShape.setOutlineColor(sf::Color::White);
         m_cardShape.setOutlineThickness(2);
         m_cardShape.setOrigin(size.x / 2, size.y / 2);
@@ -35,6 +35,11 @@ namespace as {
     
     void Card::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(m_cardShape, states);
+        
+        if (!m_isRevealed) {
+            return;
+        }
+        
         target.draw(m_cardText, states);
         
         if (m_color == ALL) {
@@ -115,5 +120,23 @@ namespace as {
         
         sf::Vertex &closingVertex = m_gradient[m_gradient.getVertexCount() - 1];
         closingVertex.position = center - m_cardShape.getPoint(0) + m_cardShape.getOrigin();
+    }
+    
+    bool Card::getIsRevealed() {
+        return m_isRevealed;
+    }
+    
+    void Card::setIsRevealed(bool isReveald) {
+        m_isRevealed = isReveald;
+        
+        if (isReveald) {
+            m_cardShape.setFillColor(getSFColorForCardColor(m_color));
+        } else {
+            m_cardShape.setFillColor(sf::Color(205, 205, 205));
+        }
+    }
+    
+    void Card::setHorizontalScale(float scale) {
+        m_cardShape.setScale(scale, 1);
     }
 }
