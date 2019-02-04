@@ -12,7 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-std=c++11" />
+					<Add option="-std=c++1z" />
 					<Add option="-g" />
 					<Add directory="../CardHero" />
 				</Compiler>
@@ -63,6 +63,8 @@
 		<Unit filename="Collision.cpp" />
 		<Unit filename="Collision.h" />
 		<Unit filename="DEFINITIONS.h" />
+		<Unit filename="FlipCardAnimation.cpp" />
+		<Unit filename="FlipCardAnimation.hpp" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="InputManager.cpp" />
@@ -71,6 +73,7 @@
 		<Unit filename="MainMenuState.h" />
 		<Unit filename="PlatformerState.cpp" />
 		<Unit filename="PlatformerState.h" />
+		<Unit filename="ResourcePath.cpp" />
 		<Unit filename="ResourcePath.hpp" />
 		<Unit filename="RoundedRectangleShape.cpp" />
 		<Unit filename="RoundedRectangleShape.hpp" />
@@ -79,6 +82,8 @@
 		<Unit filename="State.h" />
 		<Unit filename="StateMachine.cpp" />
 		<Unit filename="StateMachine.h" />
+		<Unit filename="TransitionCardAnimation.cpp" />
+		<Unit filename="TransitionCardAnimation.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

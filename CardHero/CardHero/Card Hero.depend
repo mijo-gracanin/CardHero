@@ -435,7 +435,7 @@
 	<stack>
 	"State.h"
 
-1542037728 f:\projects\cardhero\cardhero\cardhero\state.h
+1547986347 f:\projects\cardhero\cardhero\cardhero\state.h
 
 1528372359 f:\projects\cardhero\cardhero\cardhero\inputmanager.h
 	<SFML/Graphics.hpp>
@@ -451,18 +451,19 @@
 1528377430 source:f:\projects\cardhero\cardhero\cardhero\statemachine.cpp
 	"StateMachine.h"
 
-1542141332 source:f:\projects\cardhero\cardhero\cardhero\main.cpp
+1547326474 source:f:\projects\cardhero\cardhero\cardhero\main.cpp
 	<iostream>
 	"Game.h"
 	"DEFINITIONS.h"
 
 1546954659 f:\projects\cardhero\cardhero\cardhero\definitions.h
 
-1542139759 source:f:\projects\cardhero\cardhero\cardhero\splashstate.cpp
+1547133882 source:f:\projects\cardhero\cardhero\cardhero\splashstate.cpp
 	<sstream>
 	"SplashState.h"
 	"DEFINITIONS.h"
 	"MainMenuState.h"
+	"ResourcePath.hpp"
 	<SFML/Audio.hpp>
 	<iostream>
 
@@ -570,10 +571,12 @@
 	<SFML/Audio/Export.hpp>
 	<string>
 
-1547061919 source:f:\projects\cardhero\cardhero\cardhero\collision.cpp
+1547123461 source:f:\projects\cardhero\cardhero\cardhero\collision.cpp
+	<SFML/Graphics.hpp>
+	<map>
 	"Collision.h"
 
-1541941698 f:\projects\cardhero\cardhero\cardhero\collision.h
+1547123484 f:\projects\cardhero\cardhero\cardhero\collision.h
 	<SFML/Graphics.hpp>
 
 1546944281 source:f:\projects\cardhero\cardhero\cardhero\cardsstate.cpp
@@ -583,18 +586,18 @@
 	"Game.h"
 	<iostream>
 
-1546944281 f:\projects\cardhero\cardhero\cardhero\cardsstate.hpp
+1549274959 f:\projects\cardhero\cardhero\cardhero\cardsstate.hpp
 	<SFML/Graphics.hpp>
 	<array>
 	"State.h"
 	"Game.h"
 	"Card.hpp"
-	"CardAnimation.hpp"
+	"CardAnimation.h"
 
-1546944641 source:f:\projects\cardhero\cardhero\cardhero\card.cpp
+1549274959 source:f:\projects\cardhero\cardhero\cardhero\card.cpp
 	"Card.hpp"
 
-1546944281 f:\projects\cardhero\cardhero\cardhero\card.hpp
+1549274959 f:\projects\cardhero\cardhero\cardhero\card.hpp
 	<stdio.h>
 	<SFML/Graphics.hpp>
 	"RoundedRectangleShape.hpp"
@@ -605,11 +608,12 @@
 	"State.h"
 	"Game.h"
 
-1546960283 source:f:\projects\cardhero\cardhero\cardhero\mainmenustate.cpp
+1547133882 source:f:\projects\cardhero\cardhero\cardhero\mainmenustate.cpp
 	<sstream>
 	"CardsState.hpp"
 	"PlatformerState.h"
 	"MainMenuState.h"
+	"ResourcePath.hpp"
 	"DEFINITIONS.h"
 	<SFML/Audio.hpp>
 	<iostream>
@@ -642,4 +646,29 @@
 	<SFML/Graphics.hpp>
 	"State.h"
 	"Game.h"
+
+1549274959 f:\projects\cardhero\cardhero\cardhero\cardanimation.h
+
+1541325871 f:\projects\cardhero\cardhero\cardhero\resourcepath.hpp
+	<string>
+
+1547200059 source:f:\projects\cardhero\cardhero\cardhero\resourcepath.cpp
+	"ResourcePath.hpp"
+	<string>
+
+1549274959 source:f:\projects\cardhero\cardhero\cardhero\transitioncardanimation.cpp
+	"TransitionCardAnimation.hpp"
+	<cmath>
+
+1549274959 f:\projects\cardhero\cardhero\cardhero\transitioncardanimation.hpp
+	"CardAnimation.h"
+	"Card.hpp"
+
+1549274959 source:f:\projects\cardhero\cardhero\cardhero\flipcardanimation.cpp
+	"FlipCardAnimation.hpp"
+	<algorithm>
+
+1549274959 f:\projects\cardhero\cardhero\cardhero\flipcardanimation.hpp
+	"CardAnimation.h"
+	"Card.hpp"
 
