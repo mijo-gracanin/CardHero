@@ -579,12 +579,16 @@
 1547123484 f:\projects\cardhero\cardhero\cardhero\collision.h
 	<SFML/Graphics.hpp>
 
-1546944281 source:f:\projects\cardhero\cardhero\cardhero\cardsstate.cpp
+1549274959 source:f:\projects\cardhero\cardhero\cardhero\cardsstate.cpp
 	"DEFINITIONS.h"
 	"CardsState.hpp"
 	"InputManager.h"
-	"Game.h"
+	"TransitionCardAnimation.hpp"
+	"FlipCardAnimation.hpp"
 	<iostream>
+	<random>
+	<algorithm>
+	<memory>
 
 1549274959 f:\projects\cardhero\cardhero\cardhero\cardsstate.hpp
 	<SFML/Graphics.hpp>
